@@ -1,4 +1,6 @@
-# Vite Three
+# Vite Three Start Kit
+
+use branch feature/vite-three-experience for bigger projects
 
 ## Setup
 
