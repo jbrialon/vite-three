@@ -36,7 +36,6 @@ export default class Plane {
         child.receiveShadow = true;
       }
     });
-    console.log(this.material);
 
     if (this.debug.active) {
       this.options.yellowMaterial = this.yellowMaterial.color;

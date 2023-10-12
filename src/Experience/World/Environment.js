@@ -34,7 +34,7 @@ export default class Environment {
     this.sunLight.position.set(2, 8, 8);
     this.scene.add(this.sunLight);
 
-    if (this.debug) {
+    if (this.debug.active) {
       this.debugFolder
         .add(this.sunLight, "intensity")
         .name("sunLightIntensity")
