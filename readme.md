@@ -1,6 +1,7 @@
 # Vite Three Starter Kit
 
-use branch feature/vite-three-experience for bigger projects
+- use branch feature/vite-three-experience for bigger projects
+- use branch feature/vite-three-experience-physics for bigger projects with physics 😃
 
 ## Setup
 
@@ -8,7 +9,7 @@ use branch feature/vite-three-experience for bigger projects
 # Install dependencies (only the first time)
 npm install
 
-# Run the local server at localhost:8080
+# Run the local server at localhost:5173
 npm run dev
 
 # Build for production in the dist/ directory
