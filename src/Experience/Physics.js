@@ -53,12 +53,12 @@ export default class Physics {
       // this.debugFolder.close();
 
       this.debugFolder.add(this.options, "debugger");
-      this.debugFolderGravity = this.debugFolder.addFolder("Physics");
+      this.debugFolderGravity = this.debugFolder.addFolder("Gravity");
       this.debugFolderGravity
         .add(this.options.gravity, "x")
         .min(-30)
         .max(30)
-        .name("gravity on x axis")
+        .name("X Axis")
         .onChange(() => {
           this.world.gravity.set(
             this.options.gravity.x,
@@ -70,7 +70,7 @@ export default class Physics {
         .add(this.options.gravity, "y")
         .min(-30)
         .max(30)
-        .name("gravity on y axis")
+        .name("Y Axis")
         .onChange(() => {
           this.world.gravity.set(
             this.options.gravity.x,
@@ -82,7 +82,7 @@ export default class Physics {
         .add(this.options.gravity, "z")
         .min(-30)
         .max(30)
-        .name("gravity on z axis")
+        .name("Z Axis")
         .onChange(() => {
           this.world.gravity.set(
             this.options.gravity.x,
