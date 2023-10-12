@@ -2,6 +2,7 @@ import Experience from "../Experience";
 import Environment from "./Environment";
 import Floor from "./Floor";
 import Box from "./Box";
+import Text from "./Text";
 
 export default class World {
   constructor() {
@@ -14,6 +15,7 @@ export default class World {
       // Setup
       this.box = new Box();
       this.floor = new Floor();
+      this.text = new Text();
       this.environment = new Environment();
     });
   }

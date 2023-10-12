@@ -11,29 +11,45 @@ export default class Box {
 
     // Options
     this.options = {};
+    this.geometry = new THREE.BoxGeometry(1, 1, 1);
+    this.material = new THREE.MeshBasicMaterial({
+      color: 0xbebebe,
+    });
 
     // Debug
     this.setDebug();
 
     // Setup
-    this.setModel();
+    this.addModel();
+    setInterval(() => {
+      this.addModel();
+    }, 2000);
   }
 
-  setModel() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshNormalMaterial();
+  addModel() {
+    const model = new THREE.Mesh(this.geometry, this.material);
+    model.position.x = Math.random() * 10 - 5;
+    model.position.z = Math.random() * 10 - 5;
+    model.position.y = 10;
+    model.receiveShadow = true;
+    model.castShadow = true;
+    this.physics.addPhysicToMesh(model, 1);
 
-    this.model = new THREE.Mesh(geometry, material);
-    this.model.position.y = 10;
-    this.physics.addPhysicToMesh(this.model, 1);
-
-    this.scene.add(this.model);
+    this.scene.add(model);
   }
 
   setDebug() {
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("Box");
       this.debugFolder.close();
+
+      this.options.material = this.material.color;
+      this.debugFolder
+        .addColor(this.material, "color")
+        .onChange(() => {
+          this.material.color = this.options.material;
+        })
+        .name("Box Color");
     }
   }
 

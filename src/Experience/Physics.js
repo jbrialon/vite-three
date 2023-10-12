@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import CannonDebugger from "cannon-es-debugger";
 import { threeToCannon } from "three-to-cannon";
@@ -11,11 +12,20 @@ export default class Physics {
     this.time = this.experience.time;
     this.debug = this.experience.debug;
 
+    this.options = {
+      debugger: false,
+      gravity: new THREE.Vector3(0, -29.82, 0),
+    };
+
     // World
     this.world = new CANNON.World();
     this.world.broadphase = new CANNON.SAPBroadphase(this.world);
     this.world.allowSleep = true;
-    this.world.gravity.set(0, -29.82, 0);
+    this.world.gravity.set(
+      this.options.gravity.x,
+      this.options.gravity.y,
+      this.options.gravity.z
+    );
 
     // Materials
     this.defaultMaterial = new CANNON.Material("default");
@@ -40,17 +50,49 @@ export default class Physics {
   setDebug() {
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("Physics");
-      this.debugFolder.close();
+      // this.debugFolder.close();
 
-      this.debugObject = {
-        debugger: false,
-      };
-
-      this.debugFolder.add(this.debugObject, "debugger");
-
+      this.debugFolder.add(this.options, "debugger");
+      this.debugFolderGravity = this.debugFolder.addFolder("Physics");
+      this.debugFolderGravity
+        .add(this.options.gravity, "x")
+        .min(-30)
+        .max(30)
+        .name("gravity on x axis")
+        .onChange(() => {
+          this.world.gravity.set(
+            this.options.gravity.x,
+            this.options.gravity.y,
+            this.options.gravity.z
+          );
+        });
+      this.debugFolderGravity
+        .add(this.options.gravity, "y")
+        .min(-30)
+        .max(30)
+        .name("gravity on y axis")
+        .onChange(() => {
+          this.world.gravity.set(
+            this.options.gravity.x,
+            this.options.gravity.y,
+            this.options.gravity.z
+          );
+        });
+      this.debugFolderGravity
+        .add(this.options.gravity, "z")
+        .min(-30)
+        .max(30)
+        .name("gravity on z axis")
+        .onChange(() => {
+          this.world.gravity.set(
+            this.options.gravity.x,
+            this.options.gravity.y,
+            this.options.gravity.z
+          );
+        });
       this.debugger = new CannonDebugger(this.scene, this.world, {
         onUpdate: (body, mesh) => {
-          mesh.visible = this.debugObject.debugger;
+          mesh.visible = this.options.debugger;
         },
       });
     }

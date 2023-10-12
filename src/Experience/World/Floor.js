@@ -26,14 +26,14 @@ export default class Floor {
   }
 
   setModel() {
-    this.model = this.resource.scene;
+    this.geometry = new THREE.BoxGeometry(200, 0.1, 200);
+    this.material = new THREE.MeshStandardMaterial();
 
-    this.model.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.receiveShadow = true;
-        this.physics.addPhysicToMesh(child, 0);
-      }
-    });
+    this.model = new THREE.Mesh(this.geometry, this.material);
+    this.model.position.y = -2.15;
+    this.model.receiveShadow = true;
+    this.physics.addPhysicToMesh(this.model, 0);
+
     this.scene.add(this.model);
   }
 
