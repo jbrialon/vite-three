@@ -18,6 +18,7 @@ export default class Renderer {
     // Debug
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("World");
+      this.debugFolder.close();
       this.debugFolder
         .addColor(this.options, "clearColor")
         .name("Background Color")

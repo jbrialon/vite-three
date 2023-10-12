@@ -5,6 +5,7 @@ import Time from "./Utils/Time.js";
 import Resources from "./Utils/Resources.js";
 import Debug from "./Utils/Debug.js";
 import Stats from "./Utils/Stats.js";
+import Physics from "./Physics.js";
 
 import Camera from "./Camera.js";
 import Renderer from "./Renderer.js";
@@ -36,6 +37,7 @@ export default class Experience {
     this.time = new Time();
     this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
+    this.physics = new Physics();
     this.camera = new Camera();
     this.renderer = new Renderer();
 
@@ -61,6 +63,7 @@ export default class Experience {
   update() {
     this.stats.begin();
     this.camera.update();
+    this.physics.update();
     this.world.update();
     this.renderer.update();
     this.stats.end();

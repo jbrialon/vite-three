@@ -1,7 +1,7 @@
 export default [
   {
-    name: "planeModel",
+    name: "floorModel",
     type: "gltfModel",
-    path: "/models/plane/plane.glb",
+    path: "/models/floor/floor.glb",
   },
 ];

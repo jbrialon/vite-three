@@ -1,6 +1,7 @@
 import Experience from "../Experience";
 import Environment from "./Environment";
-import Plane from "./Plane";
+import Floor from "./Floor";
+import Box from "./Box";
 
 export default class World {
   constructor() {
@@ -11,12 +12,14 @@ export default class World {
     // Wait for resources to be loaded
     this.resources.on("ready", () => {
       // Setup
-      this.plane = new Plane();
+      this.box = new Box();
+      this.floor = new Floor();
       this.environment = new Environment();
     });
   }
 
   update() {
-    if (this.plane) this.plane.update();
+    if (this.floor) this.floor.update();
+    if (this.box) this.box.update();
   }
 }
