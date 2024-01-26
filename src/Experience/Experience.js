@@ -40,6 +40,7 @@ export default class Experience {
     this.renderer = new Renderer();
 
     // World
+    this.stats.init(this.renderer.instance);
     this.world = new World();
 
     // Sizes resize event
@@ -59,11 +60,10 @@ export default class Experience {
   }
 
   update() {
-    this.stats.begin();
     this.camera.update();
     this.world.update();
     this.renderer.update();
-    this.stats.end();
+    this.stats.update();
   }
 
   destroy() {
