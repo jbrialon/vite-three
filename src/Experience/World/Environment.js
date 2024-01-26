@@ -8,14 +8,12 @@ export default class Environment {
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Environment");
-    }
-
     // Setup
     this.setAmbientLight();
     this.setSunLight();
+
+    // Debug
+    this.setDebug();
   }
 
   setAmbientLight() {
@@ -33,8 +31,12 @@ export default class Environment {
     this.sunLight.shadow.camera.bottom = -7;
     this.sunLight.position.set(2, 8, 8);
     this.scene.add(this.sunLight);
+  }
 
+  setDebug() {
+    // Debug
     if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Environment");
       this.debugFolder
         .add(this.sunLight, "intensity")
         .name("sunLightIntensity")

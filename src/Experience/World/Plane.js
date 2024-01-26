@@ -12,16 +12,14 @@ export default class Plane {
     // Options
     this.options = {};
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Plane");
-    }
-
     // Setup
     this.resource = this.resources.items.planeModel;
 
     this.setModel();
     this.setAnimation();
+
+    // Debug
+    this.setDebug();
   }
 
   setModel() {
@@ -36,16 +34,6 @@ export default class Plane {
         child.receiveShadow = true;
       }
     });
-
-    if (this.debug.active) {
-      this.options.yellowMaterial = this.yellowMaterial.color;
-      this.debugFolder
-        .addColor(this.yellowMaterial, "color")
-        .onChange(() => {
-          this.yellowMaterial.color = this.options.yellowMaterial;
-        })
-        .name("Yellow Material");
-    }
     this.scene.add(this.model);
   }
 
@@ -62,6 +50,19 @@ export default class Plane {
 
     planeAction.play();
     propellerAction.play();
+  }
+
+  setDebug() {
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Plane");
+      this.options.yellowMaterial = this.yellowMaterial.color;
+      this.debugFolder
+        .addColor(this.yellowMaterial, "color")
+        .onChange(() => {
+          this.yellowMaterial.color = this.options.yellowMaterial;
+        })
+        .name("Yellow Material");
+    }
   }
 
   update() {
