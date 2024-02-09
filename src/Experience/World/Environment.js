@@ -9,11 +9,16 @@ export default class Environment {
     this.debug = this.experience.debug;
 
     // Setup
+    this.setFog();
     this.setAmbientLight();
     this.setSunLight();
 
     // Debug
     this.setDebug();
+  }
+
+  setFog() {
+    this.scene.fog = new THREE.Fog("#9fcce9", 1, 115);
   }
 
   setAmbientLight() {
@@ -25,10 +30,11 @@ export default class Environment {
     this.sunLight.castShadow = true;
     this.sunLight.shadow.mapSize.set(1024, 1024);
     this.sunLight.shadow.camera.far = 45;
-    this.sunLight.shadow.camera.left = -7;
-    this.sunLight.shadow.camera.top = 7;
-    this.sunLight.shadow.camera.right = 7;
-    this.sunLight.shadow.camera.bottom = -7;
+    this.sunLight.shadow.camera.left = -5;
+    this.sunLight.shadow.camera.top = 5;
+    this.sunLight.shadow.camera.right = 5;
+    this.sunLight.shadow.camera.bottom = -5;
+    this.sunLight.shadow.bias = -0.0001;
     this.sunLight.position.set(2, 8, 8);
     this.scene.add(this.sunLight);
   }
@@ -43,6 +49,9 @@ export default class Environment {
         .min(0)
         .max(10)
         .step(0.001);
+
+      this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);
+      this.scene.add(this.helper);
     }
   }
 }

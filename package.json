@@ -1,7 +1,7 @@
 {
   "name": "vite-three-starter-kit",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,7 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "vite": "^5.0.11"
+    "vite": "^5.1.0"
   },
   "dependencies": {
     "lil-gui": "^0.19.1",

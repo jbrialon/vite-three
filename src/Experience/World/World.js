@@ -1,5 +1,6 @@
 import Experience from "../Experience";
 import Environment from "./Environment";
+import Ground from "./Ground";
 import Plane from "./Plane";
 
 export default class World {
@@ -11,6 +12,7 @@ export default class World {
     // Wait for resources to be loaded
     this.resources.on("ready", () => {
       // Setup
+      this.ground = new Ground();
       this.plane = new Plane();
       this.environment = new Environment();
     });
