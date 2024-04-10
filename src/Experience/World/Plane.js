@@ -29,6 +29,11 @@ export default class Plane {
       if (child instanceof THREE.Mesh) {
         if (child.name === "Cylinder_1") {
           this.yellowMaterial = child.material;
+          // Three.js is converting the colors to linear sRGB color space,
+          // we need to convert them to sRGB to display them correctly in the debug UI
+          this.options.yellowMaterial = child.material.color
+            .clone()
+            .convertLinearToSRGB();
         }
         child.castShadow = true;
         child.receiveShadow = true;
@@ -55,13 +60,12 @@ export default class Plane {
   setDebug() {
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("Plane");
-      this.options.yellowMaterial = this.yellowMaterial.color;
       this.debugFolder
-        .addColor(this.yellowMaterial, "color")
+        .addColor(this.options, "yellowMaterial")
         .onChange(() => {
           this.yellowMaterial.color = this.options.yellowMaterial;
         })
-        .name("Yellow Material");
+        .name("Plane Tips");
     }
   }
 

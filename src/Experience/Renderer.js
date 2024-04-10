@@ -36,7 +36,7 @@ export default class Renderer {
       powerPreference: "high-performance",
     });
 
-    // THREE.ColorManagement.enabled = false;
+    THREE.ColorManagement.enabled = false;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;

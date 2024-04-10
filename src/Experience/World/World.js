@@ -20,5 +20,6 @@ export default class World {
 
   update() {
     if (this.plane) this.plane.update();
+    if (this.ground) this.ground.update();
   }
 }
