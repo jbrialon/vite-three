@@ -59,7 +59,7 @@ export default class Plane {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Plane");
+      this.debugFolder = this.debug.ui.addFolder("✈️ Plane");
       this.debugFolder
         .addColor(this.options, "yellowMaterial")
         .onChange(() => {

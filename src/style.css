@@ -8,9 +8,49 @@ body {
   overflow: hidden;
 }
 
+body {
+  color: #000;
+  font-family: Monospace;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+a {
+  color: #2983ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
 .webgl {
   position: fixed;
   top: 0;
   left: 0;
   outline: none;
+}
+
+#info {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+a {
+  pointer-events: auto;
 }

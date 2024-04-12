@@ -17,7 +17,7 @@ export default class Renderer {
 
     // Debug
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("World");
+      this.debugFolder = this.debug.ui.addFolder("📦 Experience");
       this.debugFolder
         .addColor(this.options, "clearColor")
         .name("Background Color")
@@ -36,7 +36,7 @@ export default class Renderer {
       powerPreference: "high-performance",
     });
 
-    THREE.ColorManagement.enabled = false;
+    THREE.ColorManagement.enabled = true;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;

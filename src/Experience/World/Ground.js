@@ -9,7 +9,10 @@ export default class Ground {
     this.time = this.experience.time;
 
     // Options
-    this.options = {};
+    this.options = {
+      color: 0xffe8ba,
+      flatShading: true,
+    };
 
     // Setup
     this.setMaterial();
@@ -21,8 +24,8 @@ export default class Ground {
 
   setMaterial() {
     this.material = new THREE.MeshPhongMaterial({
-      color: 0xffc880,
-      flatShading: true,
+      color: this.options.color,
+      flatShading: this.options.flatShading,
     });
   }
 
@@ -38,7 +41,20 @@ export default class Ground {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Ground");
+      this.debugFolder = this.debug.ui.addFolder("🌍 Ground");
+      this.debugFolder
+        .addColor(this.options, "color")
+        .onChange(() => {
+          this.material.color.set(this.options.color);
+        })
+        .name("Ground Color");
+      this.debugFolder
+        .add(this.options, "flatShading")
+        .name("Flat Shading")
+        .onChange(() => {
+          this.mesh.material.flatShading = this.options.flatShading;
+          this.mesh.material.needsUpdate = true;
+        });
     }
   }
 
