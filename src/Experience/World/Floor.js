@@ -21,7 +21,7 @@ export default class Floor {
   }
 
   setModel() {
-    this.geometry = new THREE.BoxGeometry(10, 0.1, 10);
+    this.geometry = new THREE.BoxGeometry(12, 0.1, 12);
     this.material = new THREE.MeshStandardMaterial();
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);

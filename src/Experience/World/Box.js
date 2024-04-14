@@ -16,45 +16,59 @@ export default class Box {
       color: 0xbebebe,
       position: new THREE.Vector3(0, 10, 0),
     };
+
     this.geometry = new THREE.BoxGeometry(1, 1, 1);
-    this.material = new THREE.MeshBasicMaterial({
+    this.material = new THREE.MeshStandardMaterial({
       color: this.options.color,
     });
 
+    this.boxes = [];
+    this.rigidBodies = [];
     // Setup
     this.addMesh();
-    this.initPhysic();
 
     // Debug
     this.setDebug();
   }
 
   addMesh() {
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(
+    const mesh = new THREE.Mesh(this.geometry, this.material);
+    mesh.position.set(
       this.options.position.x,
       this.options.position.y,
       this.options.position.z
     );
-    this.mesh.receiveShadow = true;
-    this.mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.castShadow = true;
 
-    this.scene.add(this.mesh);
+    this.initPhysic(mesh);
+    this.scene.add(mesh);
   }
 
-  initPhysic() {
-    this.position = this.mesh.position.clone();
-    const { rigidBody, collider } = createRigidBodyEntity(
-      this.mesh,
+  initPhysic(mesh) {
+    const { rigidBody } = createRigidBodyEntity(
+      mesh,
       this.options.position,
       this.physic
     );
-    this.rigidBody = rigidBody;
-    this.collider = collider;
+
+    this.boxes.push({
+      mesh,
+      rigidBody,
+    });
   }
 
   updateVisual() {
-    if (this.mesh) this.mesh.position.copy(this.rigidBody.translation());
+    this.boxes.forEach((box) => {
+      box.mesh.position.copy(box.rigidBody.translation());
+      const quaternion = box.rigidBody.rotation();
+      box.mesh.quaternion.set(
+        quaternion.x,
+        quaternion.y,
+        quaternion.z,
+        quaternion.w
+      );
+    });
   }
 
   update() {
@@ -64,14 +78,8 @@ export default class Box {
   setDebug() {
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("📦 Box");
-      this.debugFolder.close();
 
-      this.debugFolder
-        .addColor(this.options, "color")
-        .onChange(() => {
-          this.material.color = this.options.material;
-        })
-        .name("Box Color");
+      this.debugFolder.add(this, "addMesh");
     }
   }
 }
