@@ -21,14 +21,12 @@ export default class Box {
       color: this.options.color,
     });
 
+    // Setup
+    this.addMesh();
+    this.initPhysic();
+
     // Debug
     this.setDebug();
-
-    // Setup
-    setTimeout(() => {
-      this.addMesh();
-      this.initPhysic();
-    }, 5000);
   }
 
   addMesh() {
@@ -55,25 +53,21 @@ export default class Box {
     this.collider = collider;
   }
 
-  updatePhysic() {}
-
   updateVisual() {
     if (this.mesh) this.mesh.position.copy(this.rigidBody.translation());
   }
 
   update() {
-    this.updatePhysic();
     this.updateVisual();
   }
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Box");
+      this.debugFolder = this.debug.ui.addFolder("📦 Box");
       this.debugFolder.close();
 
-      this.options.material = this.material.color;
       this.debugFolder
-        .addColor(this.material, "color")
+        .addColor(this.options, "color")
         .onChange(() => {
           this.material.color = this.options.material;
         })

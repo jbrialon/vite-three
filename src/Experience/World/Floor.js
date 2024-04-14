@@ -15,15 +15,7 @@ export default class Floor {
     // Options
     this.options = {};
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Floor");
-      this.debugFolder.close();
-    }
-
     // Setup
-    this.resource = this.resources.items.floorModel;
-
     this.setModel();
     this.initPhysic();
   }
@@ -33,7 +25,6 @@ export default class Floor {
     this.material = new THREE.MeshStandardMaterial();
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.y = 0;
     this.mesh.receiveShadow = true;
 
     this.scene.add(this.mesh);
