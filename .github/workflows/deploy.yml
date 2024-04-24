@@ -25,7 +25,7 @@ jobs:
         with:
           switches: -avrh --delete
           path: dist/
-          remote_path: /var/www/virtual/${{ vars.SSH_USERNAME }}/html/vite-three.jerem.cool
+          remote_path: /var/www/virtual/${{ vars.SSH_USERNAME }}/html/${{ SSH_FOLDER }}
           remote_host: ${{ vars.SSH_HOST }}
           remote_user: ${{ vars.SSH_USERNAME }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
