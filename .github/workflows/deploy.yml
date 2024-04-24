@@ -6,12 +6,25 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
       - name: Deploy using Rsync
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: -avrh --delete
-          path: static/
+          path: dist/
           remote_path: /var/www/virtual/${{ vars.SSH_USERNAME }}/html/vite-three.jerem.cool
           remote_host: ${{ vars.SSH_HOST }}
           remote_user: ${{ vars.SSH_USERNAME }}
