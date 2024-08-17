@@ -15,18 +15,10 @@ export default class Renderer {
       clearColor: "#9fcce9",
     };
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("📦 Experience");
-      this.debugFolder
-        .addColor(this.options, "clearColor")
-        .name("Background Color")
-        .onChange(() => {
-          this.instance.setClearColor(this.options.clearColor);
-        });
-    }
-
     this.setInstance();
+
+    // Debug
+    this.setDebug();
   }
 
   setInstance() {
@@ -44,6 +36,18 @@ export default class Renderer {
 
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
+  }
+
+  setDebug() {
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("📦 Experience");
+      this.debugFolder
+        .addColor(this.options, "clearColor")
+        .name("Background Color")
+        .onChange(() => {
+          this.instance.setClearColor(this.options.clearColor);
+        });
+    }
   }
 
   resize() {

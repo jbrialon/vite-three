@@ -29,8 +29,16 @@ button {
   text-transform: uppercase;
 }
 
-.webgl {
+.experience {
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: var(--vh);
+}
+
+.webgl {
+  position: absolute;
   top: 0;
   left: 0;
   outline: none;
