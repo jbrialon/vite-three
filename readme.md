@@ -1,9 +1,9 @@
-# Vite Three Starter Kit
+# Vite Three
 
 ## Copy (clone without git history)
 
 ```shell
-npx degit jbrialon/vite-three-starter-kit threejs-project-folder
+npx degit jbrialon/vite-three threejs-project-folder
 ```
 
 ## Setup
