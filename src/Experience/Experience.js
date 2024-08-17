@@ -16,7 +16,7 @@ import sources from "./sources.js";
 let instance = null;
 
 export default class Experience {
-  constructor(canvas) {
+  constructor(_options = {}) {
     // Singleton
     if (instance) {
       return instance;
@@ -27,7 +27,18 @@ export default class Experience {
     window.experience = this;
 
     // Options
-    this.canvas = canvas;
+    // Options
+    this.canvas = _options.canvas || null;
+    this.targetElement = _options.targetElement || null;
+
+    if (!this.targetElement || !this.canvas) {
+      console.warn(
+        `Missing properties:  ${
+          !this.targetElement ? "'targetElement' " : ""
+        } ${!this.canvas ? "'canvas'" : ""}`
+      );
+      return;
+    }
 
     // Setup
     this.debug = new Debug();
