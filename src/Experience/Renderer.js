@@ -40,7 +40,7 @@ export default class Renderer {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("📦 Experience");
+      this.debugFolder = this.debug.ui.addFolder("Experience");
       this.debugFolder
         .addColor(this.options, "clearColor")
         .name("Background Color")

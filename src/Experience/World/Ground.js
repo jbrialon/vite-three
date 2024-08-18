@@ -41,7 +41,7 @@ export default class Ground {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("🌍 Ground");
+      this.debugFolder = this.debug.ui.addFolder("Ground");
       this.debugFolder
         .addColor(this.options, "color")
         .onChange(() => {

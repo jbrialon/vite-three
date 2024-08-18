@@ -27,7 +27,6 @@ export default class Experience {
     window.experience = this;
 
     // Options
-    // Options
     this.canvas = _options.canvas || null;
     this.targetElement = _options.targetElement || null;
 

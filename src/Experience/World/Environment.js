@@ -45,7 +45,7 @@ export default class Environment {
   setDebug() {
     // Debug
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("🔆 Env");
+      this.debugFolder = this.debug.ui.addFolder("Env");
       this.debugFolder
         .add(this.ambientLight, "intensity")
         .name("Light Intensity")
