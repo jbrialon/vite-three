@@ -10,7 +10,7 @@ export default class Ground {
 
     // Options
     this.options = {
-      color: 0xffe8ba,
+      color: 0xffde9e,
       flatShading: true,
     };
 

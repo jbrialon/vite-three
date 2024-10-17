@@ -12,7 +12,9 @@ export default class Renderer {
 
     // Options
     this.options = {
-      clearColor: "#9fcce9",
+      clearColor: 0x9fcce9,
+      toneMapping: THREE.ACESFilmicToneMapping,
+      toneMappingExposure: 1,
     };
 
     this.setInstance();
@@ -34,6 +36,9 @@ export default class Renderer {
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
     this.instance.setClearColor(this.options.clearColor);
 
+    this.instance.toneMapping = this.options.toneMapping;
+    this.instance.toneMappingExposure = this.options.toneMappingExposure;
+
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }
@@ -46,6 +51,27 @@ export default class Renderer {
         .name("Background Color")
         .onChange(() => {
           this.instance.setClearColor(this.options.clearColor);
+        });
+      // Tone Mapping
+      this.debugFolder
+        .add(this.options, "toneMapping", {
+          None: THREE.NoToneMapping,
+          Linear: THREE.LinearToneMapping,
+          Reinhard: THREE.ReinhardToneMapping,
+          Cineon: THREE.CineonToneMapping,
+          ACESFilmic: THREE.ACESFilmicToneMapping,
+        })
+        .name("Tone Mapping")
+        .onChange(() => {
+          this.instance.toneMapping = Number(this.options.toneMapping);
+        });
+
+      // Tone Mapping Exposure
+      this.debugFolder
+        .add(this.options, "toneMappingExposure", 0, 2, 0.01)
+        .name("Exposure")
+        .onChange(() => {
+          this.instance.toneMappingExposure = this.options.toneMappingExposure;
         });
     }
   }

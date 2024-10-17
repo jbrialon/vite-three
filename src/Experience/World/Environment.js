@@ -11,6 +11,7 @@ export default class Environment {
     this.options = {
       ambientLightColor: 0xffffff,
       sunLightColor: 0xffffff,
+      showHelper: false,
     };
 
     // Setup
@@ -29,7 +30,7 @@ export default class Environment {
     this.scene.add(this.ambientLight);
   }
   setSunLight() {
-    this.sunLight = new THREE.DirectionalLight(0xffffff, 2);
+    this.sunLight = new THREE.DirectionalLight(this.options.sunLightColor, 2);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.mapSize.set(2048, 2048);
     this.sunLight.shadow.camera.far = 45;
@@ -73,8 +74,25 @@ export default class Environment {
           this.sunLight.color.set(this.options.sunLightColor);
         });
 
+      // Show/Hide Directional Light Helper
       this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);
-      this.scene.add(this.helper);
+      this.debugFolder
+        .add(this.options, "showHelper")
+        .name("Show Light Helper")
+        .onChange((value) => {
+          if (value) {
+            this.scene.add(this.helper); // Add the helper to the scene
+          } else {
+            this.scene.remove(this.helper); // Remove the helper from the scene
+          }
+        });
+
+      // Initially add the helper if showHelper is true
+      // Create the helper but don't add it to the scene yet
+      this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);
+      if (this.options.showHelper) {
+        this.scene.add(this.helper);
+      }
     }
   }
 }
