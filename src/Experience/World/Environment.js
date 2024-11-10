@@ -12,9 +12,16 @@ export default class Environment {
       ambientLightColor: 0xffffff,
       sunLightColor: 0xffffff,
       showHelper: false,
+      environmentIntensity: 1,
+      useEnvMap: false,
+      showEnvMap: false,
+      envMapRotation: Math.PI * 0.5,
     };
 
     // Setup
+    this.envMap = this.resources.items.envMap;
+
+    this.setEnvMap();
     this.setAmbientLight();
     this.setSunLight();
 
@@ -22,6 +29,17 @@ export default class Environment {
     this.setDebug();
   }
 
+  setEnvMap() {
+    this.envMap.colorSpace = THREE.SRGBColorSpace;
+
+    this.scene.background = this.options.showEnvMap ? this.envMap : null;
+    this.scene.environment = this.options.useEnvMap ? this.envMap : null;
+
+    this.scene.backgroundRotation.y = this.options.envMapRotation;
+    this.scene.environmentRotation.y = this.options.envMapRotation;
+
+    this.scene.environmentIntensity = this.options.environmentIntensity;
+  }
   setAmbientLight() {
     this.ambientLight = new THREE.AmbientLight(
       this.options.ambientLightColor,
@@ -29,6 +47,7 @@ export default class Environment {
     );
     this.scene.add(this.ambientLight);
   }
+
   setSunLight() {
     this.sunLight = new THREE.DirectionalLight(this.options.sunLightColor, 2);
     this.sunLight.castShadow = true;
@@ -73,6 +92,38 @@ export default class Environment {
         .onChange(() => {
           this.sunLight.color.set(this.options.sunLightColor);
         });
+
+      // Toggle Env Map
+      this.debugFolder
+        .add(this.options, "useEnvMap")
+        .name("Use Env Map")
+        .onChange(() => {
+          this.scene.environment = this.options.useEnvMap ? this.envMap : null;
+        });
+
+      // Show/Hide Env Map
+      this.debugFolder
+        .add(this.options, "showEnvMap")
+        .name("Show Env Map")
+        .onChange(() => {
+          this.scene.background = this.options.showEnvMap ? this.envMap : null;
+        });
+
+      this.debugFolder
+        .add(this.options, "envMapRotation")
+        .min(-Math.PI)
+        .max(Math.PI)
+        .onChange(() => {
+          this.scene.backgroundRotation.y = this.options.envMapRotation;
+          this.scene.environmentRotation.y = this.options.envMapRotation;
+        });
+
+      this.debugFolder
+        .add(this.scene, "environmentIntensity")
+        .name("Env Intensity")
+        .min(0)
+        .max(5)
+        .step(0.001);
 
       // Show/Hide Directional Light Helper
       this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);

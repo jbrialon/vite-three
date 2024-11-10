@@ -23,7 +23,7 @@ export default class Ground {
   }
 
   setMaterial() {
-    this.material = new THREE.MeshPhongMaterial({
+    this.material = new THREE.MeshStandardMaterial({
       color: this.options.color,
       flatShading: this.options.flatShading,
     });
