@@ -6,11 +6,13 @@ export default class Performance {
 
     if (this.active) {
       this.stats = new Stats({
+        trackGPU: true,
+        trackHz: true,
+        trackCPT: true,
         minimal: false,
-        horizontal: false,
         mode: 2,
+        horizontal: false,
       });
-      // this.stats.showPanel(0);
       document.body.appendChild(this.stats.dom);
     }
   }
