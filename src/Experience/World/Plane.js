@@ -33,7 +33,8 @@ export default class Plane {
           // we need to convert them to sRGB to display them correctly in the debug UI
           this.options.yellowMaterial = child.material.color
             .clone()
-            .convertLinearToSRGB();
+            .convertLinearToSRGB()
+            .getHex();
         }
         child.castShadow = true;
         child.receiveShadow = true;
@@ -59,13 +60,19 @@ export default class Plane {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Plane");
+      this.debugFolder = this.debug.ui.addFolder({
+        title: "Plane",
+      });
+
       this.debugFolder
-        .addColor(this.options, "yellowMaterial")
-        .onChange(() => {
-          this.yellowMaterial.color = this.options.yellowMaterial;
+        .addBinding(this.options, "yellowMaterial", {
+          view: "color",
+          label: "Tips",
         })
-        .name("Plane Tips");
+        .on("change", () => {
+          console.log(this.options.yellowMaterial);
+          this.yellowMaterial.color.set(this.options.yellowMaterial);
+        });
     }
   }
 

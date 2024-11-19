@@ -65,81 +65,85 @@ export default class Environment {
   setDebug() {
     // Debug
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Env");
-      this.debugFolder
-        .add(this.ambientLight, "intensity")
-        .name("Light Intensity")
-        .min(0)
-        .max(10)
-        .step(0.001);
+      this.debugFolder = this.debug.ui.addFolder({
+        title: "Env",
+        expanded: false,
+      });
+
+      this.debugFolder.addBinding(this.ambientLight, "intensity", {
+        min: 0,
+        max: 10,
+        step: 0.001,
+        label: "Ambient",
+      });
 
       this.debugFolder
-        .addColor(this.options, "ambientLightColor")
-        .name("Light Color")
-        .onChange(() => {
+        .addBinding(this.options, "ambientLightColor", {
+          view: "color",
+          label: "color",
+        })
+        .on("change", () => {
           this.ambientLight.color.set(this.options.ambientLightColor);
         });
 
+      this.debugFolder.addBinding(this.sunLight, "intensity", {
+        min: 0,
+        max: 10,
+        step: 0.001,
+        label: "Directionnal",
+      });
+
       this.debugFolder
-        .add(this.sunLight, "intensity")
-        .name("Sun Intensity")
-        .min(0)
-        .max(10)
-        .step(0.001);
-      this.debugFolder
-        .addColor(this.options, "sunLightColor")
-        .name("Light Color")
-        .onChange(() => {
+        .addBinding(this.options, "sunLightColor", {
+          view: "color",
+          label: "color",
+        })
+        .on("change", () => {
           this.sunLight.color.set(this.options.sunLightColor);
         });
 
       // Toggle Env Map
       this.debugFolder
-        .add(this.options, "useEnvMap")
-        .name("Use Env Map")
-        .onChange(() => {
+        .addBinding(this.options, "useEnvMap")
+        .on("change", () => {
           this.scene.environment = this.options.useEnvMap ? this.envMap : null;
         });
 
-      // Show/Hide Env Map
       this.debugFolder
-        .add(this.options, "showEnvMap")
-        .name("Show Env Map")
-        .onChange(() => {
+        .addBinding(this.options, "showEnvMap")
+        .on("change", () => {
           this.scene.background = this.options.showEnvMap ? this.envMap : null;
         });
 
       this.debugFolder
-        .add(this.options, "envMapRotation")
-        .min(-Math.PI)
-        .max(Math.PI)
-        .onChange(() => {
+        .addBinding(this.options, "envMapRotation", {
+          min: -Math.PI,
+          max: Math.PI,
+        })
+        .on("change", () => {
           this.scene.backgroundRotation.y = this.options.envMapRotation;
           this.scene.environmentRotation.y = this.options.envMapRotation;
         });
 
-      this.debugFolder
-        .add(this.scene, "environmentIntensity")
-        .name("Env Intensity")
-        .min(0)
-        .max(5)
-        .step(0.001);
+      this.debugFolder.addBinding(this.scene, "environmentIntensity", {
+        min: 0,
+        max: 5,
+        step: 0.001,
+      });
 
       // Show/Hide Directional Light Helper
-      this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);
       this.debugFolder
-        .add(this.options, "showHelper")
-        .name("Show Light Helper")
-        .onChange((value) => {
-          if (value) {
+        .addBinding(this.options, "showHelper")
+        .on("change", () => {
+          if (this.options.showHelper) {
             this.scene.add(this.helper); // Add the helper to the scene
           } else {
             this.scene.remove(this.helper); // Remove the helper from the scene
           }
         });
 
-      // Initially add the helper if showHelper is true
-      // Create the helper but don't add it to the scene yet
+      // // Initially add the helper if showHelper is true
+      // // Create the helper but don't add it to the scene yet
       this.helper = new THREE.DirectionalLightHelper(this.sunLight, 5);
       if (this.options.showHelper) {
         this.scene.add(this.helper);

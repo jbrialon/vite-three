@@ -1,11 +1,11 @@
-import { GUI } from "lil-gui";
+import { Pane } from "tweakpane";
 
 export default class Debug {
   constructor() {
     this.active = window.location.hash === "#debug";
 
     if (this.active) {
-      this.ui = new GUI({ title: "Debug UI" });
+      this.ui = new Pane({ title: "Parameters" });
     }
   }
 }

@@ -41,17 +41,21 @@ export default class Ground {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Ground");
+      this.debugFolder = this.debug.ui.addFolder({
+        title: "Ground",
+      });
+
       this.debugFolder
-        .addColor(this.options, "color")
-        .onChange(() => {
-          this.material.color.set(this.options.color);
+        .addBinding(this.options, "color", {
+          view: "color",
         })
-        .name("Ground Color");
+        .on("change", () => {
+          this.material.color.set(this.options.color);
+        });
+
       this.debugFolder
-        .add(this.options, "flatShading")
-        .name("Flat Shading")
-        .onChange(() => {
+        .addBinding(this.options, "flatShading")
+        .on("change", () => {
           this.mesh.material.flatShading = this.options.flatShading;
           this.mesh.material.needsUpdate = true;
         });

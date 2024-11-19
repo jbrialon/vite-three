@@ -45,32 +45,40 @@ export default class Renderer {
 
   setDebug() {
     if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Experience");
+      this.debugFolder = this.debug.ui.addFolder({
+        title: "Experience",
+      });
       this.debugFolder
-        .addColor(this.options, "clearColor")
-        .name("Background Color")
-        .onChange(() => {
+        .addBinding(this.options, "clearColor", {
+          label: "Background",
+          view: "color",
+        })
+        .on("change", () => {
           this.instance.setClearColor(this.options.clearColor);
         });
       // Tone Mapping
       this.debugFolder
-        .add(this.options, "toneMapping", {
-          None: THREE.NoToneMapping,
-          Linear: THREE.LinearToneMapping,
-          Reinhard: THREE.ReinhardToneMapping,
-          Cineon: THREE.CineonToneMapping,
-          ACESFilmic: THREE.ACESFilmicToneMapping,
+        .addBinding(this.options, "toneMapping", {
+          options: {
+            None: THREE.NoToneMapping,
+            Linear: THREE.LinearToneMapping,
+            Reinhard: THREE.ReinhardToneMapping,
+            Cineon: THREE.CineonToneMapping,
+            ACESFilmic: THREE.ACESFilmicToneMapping,
+          },
         })
-        .name("Tone Mapping")
-        .onChange(() => {
+        .on("change", () => {
           this.instance.toneMapping = Number(this.options.toneMapping);
         });
-
-      // Tone Mapping Exposure
+      // // Tone Mapping Exposure
       this.debugFolder
-        .add(this.options, "toneMappingExposure", 0, 2, 0.01)
-        .name("Exposure")
-        .onChange(() => {
+        .addBinding(this.options, "toneMappingExposure", {
+          label: "Exposure",
+          min: 0,
+          max: 2,
+          step: 0.01,
+        })
+        .on("change", () => {
           this.instance.toneMappingExposure = this.options.toneMappingExposure;
         });
     }
