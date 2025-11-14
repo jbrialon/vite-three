@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
 import Experience from "./Experience";
 
 export default class Renderer {
@@ -12,23 +12,21 @@ export default class Renderer {
 
     // Options
     this.options = {
-      clearColor: 0x9fcce9,
+      clearColor: 0x7cb7e5,
       toneMapping: THREE.ACESFilmicToneMapping,
       toneMappingExposure: 1,
     };
-
-    this.setInstance();
-
-    // Debug
-    this.setDebug();
   }
 
-  setInstance() {
-    this.instance = new THREE.WebGLRenderer({
+  async setInstance() {
+    this.instance = new THREE.WebGPURenderer({
       canvas: this.canvas,
+      forceWebGL: false,
       antialias: true,
       powerPreference: "high-performance",
     });
+
+    await this.instance.init();
 
     THREE.ColorManagement.enabled = true;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
@@ -41,6 +39,8 @@ export default class Renderer {
 
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
+
+    this.setDebug();
   }
 
   setDebug() {
