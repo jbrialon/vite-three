@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
 
 import Sizes from "./Utils/Sizes.js";
 import Time from "./Utils/Time.js";
@@ -39,6 +39,10 @@ export default class Experience {
       return;
     }
 
+    this.init();
+  }
+
+  async init() {
     // Setup
     this.debug = new Debug();
     this.stats = new Stats();
@@ -48,6 +52,8 @@ export default class Experience {
     this.resources = new Resources(sources);
     this.camera = new Camera();
     this.renderer = new Renderer();
+
+    await this.renderer.setInstance();
 
     // World
     this.stats.init(this.renderer.instance);

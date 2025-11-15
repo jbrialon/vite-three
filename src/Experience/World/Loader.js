@@ -1,9 +1,8 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
+import { uniform, color, vec4, attribute } from "three/tsl";
+
 import { gsap } from "gsap";
 import Experience from "../Experience";
-
-import vertexShader from "../../shaders/loader/vertex.glsl";
-import fragmentShader from "../../shaders/loader/fragment.glsl";
 
 export default class Loader {
   constructor() {
@@ -12,8 +11,8 @@ export default class Loader {
 
     // Options
     this.options = {
-      uColor: 0x9fcce9,
-      uAlpha: 1,
+      uColor: color(0x7cb7e5),
+      uAlpha: uniform(1),
     };
 
     // Setup
@@ -27,24 +26,27 @@ export default class Loader {
   }
 
   setMaterial() {
-    this.material = new THREE.ShaderMaterial({
-      transparent: true,
-      uniforms: {
-        uAlpha: new THREE.Uniform(this.options.uAlpha),
-        uColor: new THREE.Uniform(new THREE.Color(this.options.uColor)),
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
+    this.material = new THREE.NodeMaterial();
+    this.material.depthTest = false;
+    this.material.depthWrite = false;
+    this.material.transparent = true;
+
+    // Vertex shader equivalent in TSL - fullscreen quad
+    // Use position attribute directly as clip space coordinates
+    const position = attribute("position");
+    this.material.vertexNode = vec4(position, 1.0);
+
+    this.material.fragmentNode = vec4(this.options.uColor, this.options.uAlpha);
   }
 
   setMesh() {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.frustumCulled = true;
     this.scene.add(this.mesh);
   }
 
   hideLoader() {
-    gsap.to(this.material.uniforms.uAlpha, {
+    gsap.to(this.options.uAlpha, {
       duration: 3,
       value: 0,
       ease: "power4.inOut",

@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
 import EventEmitter from "./EventEmitter";
 
 export default class Time extends EventEmitter {
