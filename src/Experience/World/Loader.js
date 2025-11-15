@@ -10,7 +10,7 @@ export default class Loader {
     this.scene = this.experience.scene;
 
     // Options
-    this.uniforms = {
+    this.options = {
       uColor: color(0x7cb7e5),
       uAlpha: uniform(1),
     };
@@ -36,10 +36,7 @@ export default class Loader {
     const position = attribute("position");
     this.material.vertexNode = vec4(position, 1.0);
 
-    this.material.fragmentNode = vec4(
-      this.uniforms.uColor,
-      this.uniforms.uAlpha
-    );
+    this.material.fragmentNode = vec4(this.options.uColor, this.options.uAlpha);
   }
 
   setMesh() {
@@ -49,7 +46,7 @@ export default class Loader {
   }
 
   hideLoader() {
-    gsap.to(this.uniforms.uAlpha, {
+    gsap.to(this.options.uAlpha, {
       duration: 3,
       value: 0,
       ease: "power4.inOut",
