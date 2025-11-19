@@ -1,5 +1,5 @@
 import * as THREE from "three/webgpu";
-import { uniform, color, vec4, attribute } from "three/tsl";
+import { uniform, color, vec4, positionLocal } from "three/tsl";
 
 import { gsap } from "gsap";
 import Experience from "../Experience";
@@ -31,10 +31,7 @@ export default class Loader {
     this.material.depthWrite = false;
     this.material.transparent = true;
 
-    // Vertex shader equivalent in TSL - fullscreen quad
-    // Use position attribute directly as clip space coordinates
-    const position = attribute("position");
-    this.material.vertexNode = vec4(position, 1.0);
+    this.material.vertexNode = vec4(positionLocal, 1.0);
 
     this.material.fragmentNode = vec4(this.options.uColor, this.options.uAlpha);
   }
@@ -42,6 +39,7 @@ export default class Loader {
   setMesh() {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.frustumCulled = true;
+    this.mesh.renderOrder = 999; // Render on top of everything
     this.scene.add(this.mesh);
   }
 
