@@ -1,5 +1,6 @@
 import * as THREE from "three/webgpu";
 import Experience from "./Experience";
+import Postprocessing from "./Postprocessing";
 
 export default class Renderer {
   constructor() {
@@ -39,6 +40,8 @@ export default class Renderer {
 
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
+
+    this.postprocessing = new Postprocessing();
 
     this.setDebug();
   }
@@ -90,6 +93,12 @@ export default class Renderer {
   }
 
   update() {
-    this.instance.render(this.scene, this.camera.instance);
+    // Rendering is handled by postprocessing when enabled
+    if (this.postprocessing && this.postprocessing.options.enabled) {
+      this.postprocessing.update();
+    } else {
+      // Fallback to normal rendering if postprocessing is disabled
+      this.instance.render(this.scene, this.camera.instance);
+    }
   }
 }
