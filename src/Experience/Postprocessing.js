@@ -1,5 +1,5 @@
 import * as THREE from "three/webgpu";
-import { pass } from "three/tsl";
+import { pass, depthPass } from "three/tsl";
 import { customPixelate } from "./CustomPass.js";
 import Experience from "./Experience";
 
@@ -26,8 +26,10 @@ export default class Postprocessing {
 
     const scenePass = pass(this.scene, this.camera.instance);
     const scenePassColor = scenePass.getTextureNode();
+    const sceneDepthPass = depthPass(this.scene, this.camera.instance);
+    const sceneDepthPassColor = sceneDepthPass.getTextureNode("depth");
 
-    this.pixelatePass = customPixelate(scenePassColor, {
+    this.pixelatePass = customPixelate(scenePassColor, sceneDepthPassColor, {
       pixelSize: this.options.pixelSize,
     });
 

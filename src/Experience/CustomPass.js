@@ -1,4 +1,11 @@
-import { Fn, uniform, uv, texture } from "three/tsl";
+import { Fn, uniform, uv, texture, vec4 } from "three/tsl";
+
+const readDepth = Fn(([depthTex, uvCoord, near, far]) => {
+  const fragCoordZ = depthTex.sample(uvCoord).r;
+  const viewZ = fragCoordZ.mul(2.0).sub(1.0);
+  const linearDepth = near.mul(far).div(far.add(viewZ.mul(near.sub(far))));
+  return linearDepth.sub(near).div(far.sub(near));
+});
 
 /**
  * Pixelation effect
@@ -6,7 +13,7 @@ import { Fn, uniform, uv, texture } from "three/tsl";
  * @param {Object} options - Effect parameters
  * @returns {Node} - Modified color output
  */
-export const customPixelate = (color, options = {}) => {
+export const customPixelate = (color, sceneDepthPassColor, options = {}) => {
   const pixelSize = uniform(options.pixelSize || 0.005);
 
   return Fn(() => {
@@ -19,6 +26,8 @@ export const customPixelate = (color, options = {}) => {
     // Sample the texture at the pixelated UV
     const pixelatedColor = texture(color, pixelatedUV);
 
-    return pixelatedColor;
+    const depth = readDepth(sceneDepthPassColor, uvCoord, 0.1, 100);
+
+    return vec4(depth, depth, depth, 1.0);
   })();
 };
