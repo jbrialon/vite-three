@@ -65,12 +65,14 @@ export default class Renderer {
             Reinhard: THREE.ReinhardToneMapping,
             Cineon: THREE.CineonToneMapping,
             ACESFilmic: THREE.ACESFilmicToneMapping,
+            AgX: THREE.AgXToneMapping,
+            Neutral: THREE.NeutralToneMapping,
           },
         })
         .on("change", () => {
           this.instance.toneMapping = Number(this.options.toneMapping);
         });
-      // // Tone Mapping Exposure
+      // Tone Mapping Exposure
       this.debugFolder
         .addBinding(this.options, "toneMappingExposure", {
           label: "Exposure",
