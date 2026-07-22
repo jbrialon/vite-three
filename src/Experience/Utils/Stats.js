@@ -1,34 +1,42 @@
 import Stats from "stats-gl";
+import Experience from "../Experience.js";
 
 export default class Performance {
   constructor() {
-    this.active = false;
+    this.experience = new Experience();
+    this.debug = this.experience.debug;
+    this.active = window.location.hash === "#debug";
 
-    this.stats = new Stats({
-      trackGPU: true,
-      trackHz: true,
-      trackCPT: true,
-      minimal: false,
-      mode: 2,
-      horizontal: false,
-    });
-    document.body.appendChild(this.stats.dom);
-    this.stats.dom.style.display = this.active ? "block" : "none";
+    if (this.active) {
+      this.stats = new Stats({
+        trackGPU: true,
+        trackHz: true,
+        trackCPT: false,
+        minimal: false,
+        mode: 2,
+        horizontal: false,
+      });
+      document.body.appendChild(this.stats.dom);
 
-    this.setupKeyboardToggle();
+      this.visible = false;
+      this.stats.dom.style.display = "none";
+      this.setDebug();
+    }
   }
 
-  setupKeyboardToggle() {
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "d" || event.key === "D") {
-        this.active = !this.active;
-        this.stats.dom.style.display = this.active ? "block" : "none";
-      }
+  setDebug() {
+    this.debugFolder = this.debug.ui.addFolder({
+      title: "Stats",
+      expanded: false,
+    });
+    this.debugFolder.addButton({ title: "Toggle Stats" }).on("click", () => {
+      this.visible = !this.visible;
+      this.stats.dom.style.display = this.visible ? "" : "none";
     });
   }
 
   init(renderer) {
-    this.stats.init(renderer);
+    if (this.active) this.stats.init(renderer);
   }
 
   begin() {
