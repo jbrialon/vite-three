@@ -48,10 +48,10 @@ export default class Plane {
     this.animation.mixer = new THREE.AnimationMixer(this.model);
 
     const planeAction = this.animation.mixer.clipAction(
-      this.resource.animations[0]
+      this.resource.animations[0],
     );
     const propellerAction = this.animation.mixer.clipAction(
-      this.resource.animations[1]
+      this.resource.animations[1],
     );
 
     planeAction.play();

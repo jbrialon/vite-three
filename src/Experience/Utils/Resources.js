@@ -42,7 +42,7 @@ export default class Resources extends EventEmitter {
             this.sourceLoaded(source, file);
           },
           (progress) => this.onProgress(progress),
-          (error) => this.onError(error, source)
+          (error) => this.onError(error, source),
         );
       } else if (source.type === "texture") {
         this.loaders.textureLoader.load(
@@ -51,7 +51,7 @@ export default class Resources extends EventEmitter {
             this.sourceLoaded(source, file);
           },
           (progress) => this.onProgress(progress),
-          (error) => this.onError(error, source)
+          (error) => this.onError(error, source),
         );
       } else if (source.type === "cubeTexture") {
         this.loaders.cubeTextureLoader.load(
@@ -60,7 +60,7 @@ export default class Resources extends EventEmitter {
             this.sourceLoaded(source, file);
           },
           (progress) => this.onProgress(progress),
-          (error) => this.onError(error, source)
+          (error) => this.onError(error, source),
         );
       } else if (source.type === "image") {
         this.loadImage(source);

@@ -34,7 +34,7 @@ export default class Experience {
       console.warn(
         `Missing properties:  ${
           !this.targetElement ? "'targetElement' " : ""
-        } ${!this.canvas ? "'canvas'" : ""}`
+        } ${!this.canvas ? "'canvas'" : ""}`,
       );
       return;
     }

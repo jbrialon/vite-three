@@ -43,7 +43,7 @@ export default class Environment {
   setAmbientLight() {
     this.ambientLight = new THREE.AmbientLight(
       this.options.ambientLightColor,
-      0.8
+      0.8,
     );
     this.scene.add(this.ambientLight);
   }
