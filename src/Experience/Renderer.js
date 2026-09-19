@@ -31,7 +31,7 @@ export default class Renderer {
     THREE.ColorManagement.enabled = true;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     this.instance.shadowMap.enabled = true;
-    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.instance.shadowMap.type = THREE.PCFShadowMap;
     this.instance.setClearColor(this.options.clearColor);
 
     this.instance.toneMapping = this.options.toneMapping;
